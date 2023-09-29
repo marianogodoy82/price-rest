@@ -1,122 +1,94 @@
 package com.challenge.pricerest.resource;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 
-import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
-import org.apache.hc.client5.http.impl.classic.HttpClients;
-import org.apache.hc.core5.http.ClassicHttpRequest;
-import org.apache.hc.core5.http.ClassicHttpResponse;
-import org.apache.hc.core5.http.ParseException;
-import org.apache.hc.core5.http.io.entity.EntityUtils;
-import org.apache.hc.core5.http.io.support.ClassicRequestBuilder;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
 
-import com.challenge.pricerest.infrastructure.rest.spring.dto.PriceDto;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.challenge.pricerest.infrastructure.config.spring.SpringBootService;
 
+@SpringBootTest(
+      webEnvironment = SpringBootTest.WebEnvironment.MOCK,
+      classes = SpringBootService.class)
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@AutoConfigureMockMvc
 class PriceControllerTest {
 
+   @Autowired
+   private MockMvc mvc;
    @Test
-   void given14thDayAt10_whenPriceIsRetrieved_then200IsReceived() throws IOException {
-
-      try(CloseableHttpClient httpclient = HttpClients.createDefault()) {
-
-         final ClassicHttpRequest httpRequest = ClassicRequestBuilder
-               .get("http://localhost:8080/prices/price")
-               .addParameter("applicationDate", "2020-06-14T10:00:00")
-               .addParameter("productId", "35455")
-               .addParameter("brandId", "1")
-               .build();
-
-         final PriceDto priceDto = httpclient.execute(httpRequest, PriceControllerTest::handleResponse);
-
-         assertEquals(BigDecimal.valueOf(35.50).setScale(2) , priceDto.getPrice());
-      }
+   void given14thDayAt10_whenPriceIsRetrieved_then200IsReceived() throws Exception {
+      mvc.perform( get("/prices/price")
+               .queryParam("applicationDate", "2020-06-14T10:00:00")
+               .queryParam("productId", "35455")
+               .queryParam("brandId", "1")
+               .contentType(MediaType.APPLICATION_JSON)
+         )
+         .andExpect(status().isOk())
+         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+         .andExpect(jsonPath("price").value(BigDecimal.valueOf(35.5)));
    }
 
    @Test
-   void given14thDayAt16_whenPriceIsRetrieved_then200IsReceived() throws IOException {
-
-      try(CloseableHttpClient httpclient = HttpClients.createDefault()) {
-         final ClassicHttpRequest httpRequest = ClassicRequestBuilder
-               .get("http://localhost:8080/prices/price")
-               .addParameter("applicationDate", "2020-06-14T16:00:00")
-               .addParameter("productId", "35455")
-               .addParameter("brandId", "1")
-               .build();
-
-         final PriceDto priceDto = httpclient.execute(httpRequest, PriceControllerTest::handleResponse);
-
-         assertEquals(BigDecimal.valueOf(25.45).setScale(2) , priceDto.getPrice());
-      }
+   void given14thDayAt16_whenPriceIsRetrieved_then200IsReceived() throws Exception {
+      mvc.perform( get("/prices/price")
+               .queryParam("applicationDate", "2020-06-14T16:00:00")
+               .queryParam("productId", "35455")
+               .queryParam("brandId", "1")
+               .contentType(MediaType.APPLICATION_JSON)
+         )
+         .andExpect(status().isOk())
+         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+         .andExpect(jsonPath("price").value(BigDecimal.valueOf(25.45)));
    }
 
 
    @Test
-   void given14thDayAt21_whenPriceIsRetrieved_then200IsReceived() throws IOException {
-
-      try(CloseableHttpClient httpclient = HttpClients.createDefault()) {
-         final ClassicHttpRequest httpRequest = ClassicRequestBuilder
-               .get("http://localhost:8080/prices/price")
-               .addParameter("applicationDate", "2020-06-14T21:00:00")
-               .addParameter("productId", "35455")
-               .addParameter("brandId", "1")
-               .build();
-
-
-         final PriceDto priceDto = httpclient.execute(httpRequest, PriceControllerTest::handleResponse);
-
-         assertEquals(BigDecimal.valueOf(35.50).setScale(2) , priceDto.getPrice());
-      }
+   void given14thDayAt21_whenPriceIsRetrieved_then200IsReceived() throws Exception {
+      mvc.perform( get("/prices/price")
+               .queryParam("applicationDate", "2020-06-14T21:00:00")
+               .queryParam("productId", "35455")
+               .queryParam("brandId", "1")
+               .contentType(MediaType.APPLICATION_JSON)
+         )
+         .andExpect(status().isOk())
+         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+         .andExpect(jsonPath("price").value(BigDecimal.valueOf(35.50)));
    }
    @Test
-   void given15thDayAt10_whenPriceIsRetrieved_then200IsReceived() throws IOException {
-
-      try(CloseableHttpClient httpclient = HttpClients.createDefault()) {
-         final ClassicHttpRequest httpRequest = ClassicRequestBuilder
-               .get("http://localhost:8080/prices/price")
-               .addParameter("applicationDate", "2020-06-15T10:00:00")
-               .addParameter("productId", "35455")
-               .addParameter("brandId", "1")
-               .build();
-
-         final PriceDto priceDto = httpclient.execute(httpRequest, PriceControllerTest::handleResponse);
-
-         assertEquals(BigDecimal.valueOf(30.50).setScale(2) , priceDto.getPrice());
-      }
+   void given15thDayAt10_whenPriceIsRetrieved_then200IsReceived() throws Exception {
+      mvc.perform( get("/prices/price")
+               .queryParam("applicationDate", "2020-06-15T10:00:00")
+               .queryParam("productId", "35455")
+               .queryParam("brandId", "1")
+               .contentType(MediaType.APPLICATION_JSON)
+         )
+         .andExpect(status().isOk())
+         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+         .andExpect(jsonPath("price").value(BigDecimal.valueOf(30.50)));
    }
 
    @Test
-   void given16thDayAt21_whenPriceIsRetrieved_then200IsReceived() throws IOException {
-
-      try(CloseableHttpClient httpclient = HttpClients.createDefault()) {
-         final ClassicHttpRequest httpRequest = ClassicRequestBuilder
-               .get("http://localhost:8080/prices/price")
-               .addParameter("applicationDate", "2020-06-16T21:00:00")
-               .addParameter("productId", "35455")
-               .addParameter("brandId", "1")
-               .build();
-
-         final PriceDto priceDto = httpclient.execute(httpRequest, PriceControllerTest::handleResponse);
-
-         assertEquals(BigDecimal.valueOf(38.95).setScale(2) , priceDto.getPrice());
-      }
-   }
-
-   private static PriceDto handleResponse(ClassicHttpResponse response) throws IOException, ParseException {
-      return new ObjectMapper()
-            .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-            .registerModule(new JavaTimeModule())
-            .readValue(EntityUtils.toString(response.getEntity()), PriceDto.class);
+   void given16thDayAt21_whenPriceIsRetrieved_then200IsReceived() throws Exception {
+      mvc.perform( get("/prices/price")
+               .queryParam("applicationDate", "2020-06-16T21:00:00")
+               .queryParam("productId", "35455")
+               .queryParam("brandId", "1")
+               .contentType(MediaType.APPLICATION_JSON)
+         )
+         .andExpect(status().isOk())
+         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+         .andExpect(jsonPath("price").value("38.95"));
    }
 }

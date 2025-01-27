@@ -3,17 +3,15 @@ package com.challenge.pricerest.infrastructure.rest.spring.dto;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Builder;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class PriceDto {
-   private Integer productId;
-   private Integer brandId;
-   private BigDecimal priceList;
-   private LocalDateTime applicationDate;
-   private BigDecimal price;
-}
+
+@Builder
+public record PriceDto (
+   Integer productId,
+   Integer brandId,
+   BigDecimal priceList,
+   LocalDateTime startDate,
+   LocalDateTime endDate,
+   BigDecimal price
+) {}

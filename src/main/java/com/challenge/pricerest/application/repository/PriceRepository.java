@@ -7,6 +7,6 @@ import com.challenge.pricerest.domain.Price;
 
 public interface PriceRepository {
 
-   Optional<Price> findPriceMatch(Integer productId, Integer brandId, LocalDateTime applicationDate);
+   Optional<Price> findApplicablePrice(Integer productId, Integer brandId, LocalDateTime applicationDate);
 
 }

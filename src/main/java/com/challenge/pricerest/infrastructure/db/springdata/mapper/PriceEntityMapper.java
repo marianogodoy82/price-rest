@@ -1,5 +1,6 @@
 package com.challenge.pricerest.infrastructure.db.springdata.mapper;
 
+
 import org.mapstruct.Mapper;
 
 import com.challenge.pricerest.domain.Price;
@@ -10,5 +11,4 @@ public interface PriceEntityMapper {
 
    Price toDomain(PriceEntity priceEntity);
 
-   PriceEntity toDbo(Price price);
 }

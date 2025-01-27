@@ -15,17 +15,18 @@ import lombok.RequiredArgsConstructor;
 @Repository
 public class PriceDboRepository implements PriceRepository {
 
-   private final SpringDataPriceRepository priceRepository;
-   private final PriceEntityMapper priceMapper;
+   private final SpringDataPriceRepository springDataPriceRepository;
+   private final PriceEntityMapper priceEntityMapper;
 
    @Override
-   public Optional<Price> findPriceMatch(Integer productId, Integer brandId, LocalDateTime applicationDate){
-      return priceRepository.findFirstByProductIdAndBrandIdAndStartDateBeforeAndEndDateAfterOrderByPriorityDesc(
+   public Optional<Price> findApplicablePrice(Integer productId, Integer brandId, LocalDateTime applicationDate){
+      return springDataPriceRepository
+            .findFirstByProductIdAndBrandIdAndStartDateBeforeAndEndDateAfterOrderByPriorityDesc(
                   productId,
                   brandId,
                   applicationDate,
                   applicationDate)
-                .map(priceMapper::toDomain);
+            .map(priceEntityMapper::toDomain);
    }
 
 }

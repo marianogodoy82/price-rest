@@ -16,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("prices/price")
+@RequestMapping("api/price")
 public class PriceController {
    private final GetApplicablePriceUseCase getApplicablePriceUseCase;
    private final PriceMapper priceMapper;

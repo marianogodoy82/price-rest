@@ -26,7 +26,7 @@ class PriceControllerTest {
    private MockMvc mvc;
    @Test
    void given14thDayAt10_whenPriceIsRetrieved_then200IsReceived() throws Exception {
-      mvc.perform( get("/prices/price")
+      mvc.perform( get("/api/price")
                .queryParam("applicationDate", "2020-06-14T10:00:00")
                .queryParam("productId", "35455")
                .queryParam("brandId", "1")
@@ -39,7 +39,7 @@ class PriceControllerTest {
 
    @Test
    void given14thDayAt16_whenPriceIsRetrieved_then200IsReceived() throws Exception {
-      mvc.perform( get("/prices/price")
+      mvc.perform( get("/api/price")
                .queryParam("applicationDate", "2020-06-14T16:00:00")
                .queryParam("productId", "35455")
                .queryParam("brandId", "1")
@@ -53,7 +53,7 @@ class PriceControllerTest {
 
    @Test
    void given14thDayAt21_whenPriceIsRetrieved_then200IsReceived() throws Exception {
-      mvc.perform( get("/prices/price")
+      mvc.perform( get("/api/price")
                .queryParam("applicationDate", "2020-06-14T21:00:00")
                .queryParam("productId", "35455")
                .queryParam("brandId", "1")
@@ -65,7 +65,7 @@ class PriceControllerTest {
    }
    @Test
    void given15thDayAt10_whenPriceIsRetrieved_then200IsReceived() throws Exception {
-      mvc.perform( get("/prices/price")
+      mvc.perform( get("/api/price")
                .queryParam("applicationDate", "2020-06-15T10:00:00")
                .queryParam("productId", "35455")
                .queryParam("brandId", "1")
@@ -78,7 +78,7 @@ class PriceControllerTest {
 
    @Test
    void given16thDayAt21_whenPriceIsRetrieved_then200IsReceived() throws Exception {
-      mvc.perform( get("/prices/price")
+      mvc.perform( get("/api/price")
                .queryParam("applicationDate", "2020-06-16T21:00:00")
                .queryParam("productId", "35455")
                .queryParam("brandId", "1")
@@ -92,7 +92,7 @@ class PriceControllerTest {
    @Test
    void testHandlePriceNotFoundException() throws Exception {
       // Simula una solicitud que lanza PriceNotFoundException
-      mvc.perform( get("/prices/price")
+      mvc.perform( get("/api/price")
                    .queryParam("applicationDate", "2020-06-14T10:00:00")
                    .queryParam("productId", "99999") // Producto no existente
                    .queryParam("brandId", "1")

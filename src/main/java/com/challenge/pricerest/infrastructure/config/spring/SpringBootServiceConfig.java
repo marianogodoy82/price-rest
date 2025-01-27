@@ -4,14 +4,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.challenge.pricerest.application.repository.PriceRepository;
-import com.challenge.pricerest.application.service.PriceService;
+import com.challenge.pricerest.application.usecase.GetApplicablePriceUseCase;
 
 @Configuration
 
 public class SpringBootServiceConfig {
 
    @Bean
-   public PriceService priceService(PriceRepository priceRepository){
-      return new PriceService(priceRepository);
+   public GetApplicablePriceUseCase priceService(PriceRepository priceRepository){
+      return new GetApplicablePriceUseCase(priceRepository);
    }
 }

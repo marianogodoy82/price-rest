@@ -1,25 +1,18 @@
-CREATE TABLE prices
-(
-    id         INT NOT NULL,
-    brand_id   INT,
-    start_date TIMESTAMP,
-    end_date   TIMESTAMP,
-    price_list INT,
-    product_id INT,
-    priority   INT,
-    price      DECIMAL,
-    curr       VARCHAR(255),
-    CONSTRAINT pk_priceentity PRIMARY KEY (id)
+CREATE TABLE PRICES (
+    ID BIGINT AUTO_INCREMENT PRIMARY KEY,
+    BRAND_ID INT NOT NULL,
+    START_DATE TIMESTAMP NOT NULL,
+    END_DATE TIMESTAMP NOT NULL,
+    PRICE_LIST INT NOT NULL,
+    PRODUCT_ID INT NOT NULL,
+    PRIORITY INT NOT NULL,
+    PRICE DECIMAL(10, 2) NOT NULL,
+    CURR VARCHAR(3) NOT NULL
 );
-INSERT
-INTO prices (id, brand_id, start_date, end_date, price_list, product_id, priority, price, curr)
-VALUES (0, 1, '2020-06-14T00:00:00', '2020-12-31T23:59:59', 1, 35455, 0, 35.50, 'EUR');
-INSERT
-INTO prices (id, brand_id, start_date, end_date, price_list, product_id, priority, price, curr)
-VALUES (1, 1, '2020-06-14T15:00:00', '2020-06-14T18:30:00', 2, 35455, 1, 25.45, 'EUR');
-INSERT
-INTO prices (id, brand_id, start_date, end_date, price_list, product_id, priority, price, curr)
-VALUES (2, 1, '2020-06-15T00:00:00', '2020-06-15T11:00:00', 3, 35455, 1, 30.50, 'EUR');
-INSERT
-INTO prices (id, brand_id, start_date, end_date, price_list, product_id, priority, price, curr)
-VALUES (3, 1, '2020-06-15T16:00:00', '2020-12-31T23:59:59', 4, 35455, 1, 38.95, 'EUR');
+
+INSERT INTO PRICES (ID, BRAND_ID, START_DATE, END_DATE, PRICE_LIST, PRODUCT_ID, PRIORITY, PRICE, CURR)
+VALUES
+    (0, 1, '2020-06-14T00:00:00', '2020-12-31T23:59:59', 1, 35455, 0, 35.50, 'EUR'),
+    (1, 1, '2020-06-14T15:00:00', '2020-06-14T18:30:00', 2, 35455, 1, 25.45, 'EUR'),
+    (2, 1, '2020-06-15T00:00:00', '2020-06-15T11:00:00', 3, 35455, 1, 30.50, 'EUR'),
+    (3, 1, '2020-06-15T16:00:00', '2020-12-31T23:59:59', 4, 35455, 1, 38.95, 'EUR');

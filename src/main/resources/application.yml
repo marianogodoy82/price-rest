@@ -4,17 +4,17 @@ spring:
     driverClassName: org.h2.Driver
     username: sa
     password: password
-  jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
-    defer-datasource-initialization: true
-    properties:
-      hibernate:
-        show_sql: true
   h2:
     console:
       enabled: true
-flyway:
-  url: jdbc:h2:mem:testdb
-  schemas: USERSERVICE
-  user: sa
-  password: password
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: none
+    defer-datasource-initialization: false
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+  flyway:
+    enabled: true

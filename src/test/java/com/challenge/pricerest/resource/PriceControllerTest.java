@@ -8,12 +8,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.math.BigDecimal;
 
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.challenge.pricerest.infrastructure.config.spring.SpringBootService;
@@ -21,7 +19,6 @@ import com.challenge.pricerest.infrastructure.config.spring.SpringBootService;
 @SpringBootTest(
       webEnvironment = SpringBootTest.WebEnvironment.MOCK,
       classes = SpringBootService.class)
-@RunWith(SpringRunner.class)
 @AutoConfigureMockMvc
 class PriceControllerTest {
 
@@ -90,5 +87,18 @@ class PriceControllerTest {
          .andExpect(status().isOk())
          .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
          .andExpect(jsonPath("price").value("38.95"));
+   }
+
+   @Test
+   void testHandlePriceNotFoundException() throws Exception {
+      // Simula una solicitud que lanza PriceNotFoundException
+      mvc.perform( get("/prices/price")
+                   .queryParam("applicationDate", "2020-06-14T10:00:00")
+                   .queryParam("productId", "99999") // Producto no existente
+                   .queryParam("brandId", "1")
+                   .contentType(MediaType.APPLICATION_JSON)
+            )
+             .andExpect(status().isNotFound())
+             .andExpect(jsonPath("$.message").value("Price not found")); // Mensaje personalizado
    }
 }
